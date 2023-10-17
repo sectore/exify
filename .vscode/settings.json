@@ -1,0 +1,19 @@
+{
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
+  "tailwindCSS.includeLanguages": {
+    "rust": "html",
+    "*.rs": "html"
+  },
+  "files.associations": {
+    "*.rs": "rust"
+  },
+  "css.validate": false,
+  // https://yew.rs/docs/getting-started/editor-setup#rust-yew-extension
+  "emmet.includeLanguages": {
+    "rust": "html",
+}
+}
