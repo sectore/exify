@@ -69,6 +69,7 @@
 
           buildInputs = [
             # Add additional build inputs here
+            pkgs.nodejs_20
           ] ++ lib.optionals pkgs.stdenv.isDarwin [
             # Additional darwin specific inputs can be set here
             pkgs.libiconv
