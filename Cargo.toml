@@ -3,7 +3,17 @@ name = "exify"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+base64 = "0.21.4"
+gloo = "0.10"
+js-sys = "0.3"
+thiserror = "1.0"
 yew = { version = "0.21", features = ["csr"] }
+
+[dependencies.web-sys]
+version = "^0.3.64"
+features = [
+  "File",
+  "DragEvent",
+  "DataTransfer"
+]
