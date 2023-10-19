@@ -12,7 +12,6 @@
     "*.rs": "rust"
   },
   "css.validate": false,
-  // https://yew.rs/docs/getting-started/editor-setup#rust-yew-extension
   "emmet.includeLanguages": {
     "rust": "html",
 }

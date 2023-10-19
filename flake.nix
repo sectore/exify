@@ -40,6 +40,9 @@
           # Set the build targets supported by the toolchain,
           # wasm32-unknown-unknown is required for trunk
           targets = [ "wasm32-unknown-unknown" ];
+          extensions = [
+            "rust-src" # rust-analyzer -> error "cannot find proc-macro-srv..." -> see https://github.com/zhangwt-cn/notes/issues/8
+          ]; 
         };
         craneLib = ((crane.mkLib pkgs).overrideToolchain rustToolchain).overrideScope' (final: prev: {
           # The version of wasm-bindgen-cli needs to match the version in Cargo.lock. You
