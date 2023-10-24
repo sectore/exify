@@ -1,5 +1,6 @@
-use std::rc::Rc;
+use std::{collections::HashMap, rc::Rc};
 
+use exif::Tag;
 use yew::prelude::*;
 
 use thiserror::Error;
@@ -9,6 +10,7 @@ pub struct FileDetails {
     pub name: String,
     pub file_type: String,
     pub data: Vec<u8>,
+    pub exif: HashMap<Tag, String>,
 }
 
 #[derive(Error, Debug, PartialEq, Eq, Clone)]
