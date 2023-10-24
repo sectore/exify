@@ -1,9 +1,14 @@
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::Rc;
 
 use gloo::console::log;
 use gloo::file::callbacks::FileReader;
 use yew::prelude::*;
+
+use exif;
+
+use std::io::Cursor;
 
 use crate::app_ctx::{AppContext, FileDetails, FileError, Msg};
 
@@ -43,15 +48,33 @@ pub fn Upload() -> Html {
                     let task = gloo::file::callbacks::read_as_bytes(&file, move |res| {
                         log!("file loaded");
                         match res {
-                            Ok(_) => ctx.dispatch(Msg::Loaded(Ok(FileDetails {
-                                name: file_name,
-                                file_type,
-                                data: res.expect("failed to read file"),
-                            }))),
+                            Ok(data) => {
+                                let mut cursor = Cursor::new(data.clone());
+                                let exif_reader = exif::Reader::new();
+                                let mut exif_map = HashMap::new();
+                                if let Ok(exif) = exif_reader.read_from_container(&mut cursor) {
+                                    for f in exif.fields() {
+                                        log!(
+                                            "f {:?} {:?}",
+                                            f.tag.to_string(),
+                                            f.display_value().to_string()
+                                        );
+                                        exif_map.insert(f.tag, f.display_value().to_string());
+                                    }
+                                };
+
+                                return ctx.dispatch(Msg::Loaded(Ok(FileDetails {
+                                    name: file_name,
+                                    file_type,
+                                    data,
+                                    exif: exif_map,
+                                })));
+                            }
                             Err(e) => ctx
                                 .dispatch(Msg::Loaded(Err(FileError::InvalidData(e.to_string())))),
                         };
                     });
+
                     // store task so it doesn't get dropped
                     *task_ref.borrow_mut() = Some(task);
                 }

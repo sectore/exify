@@ -7,6 +7,7 @@ edition = "2021"
 base64 = "0.21.4"
 gloo = "0.10"
 js-sys = "0.3"
+kamadak-exif= "0.5.5"
 thiserror = "1.0"
 yew = { version = "0.21", features = ["csr"] }
 

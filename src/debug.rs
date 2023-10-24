@@ -13,7 +13,8 @@ pub fn Debug() -> Html {
         Some(result) => match result {
           Ok(file) => html! { <div>
             <h1>{file.name}</h1>
-            <img src={format!("data:{};base64,{}", file.file_type, STANDARD.encode(&file.data))} />
+            <h2>{"Exif data lenght "} {file.exif.len()}</h2>
+            <img class="w-1/2 h-auto" src={format!("data:{};base64,{}", file.file_type, STANDARD.encode(&file.data))} />
           </div> },
           Err(err) => html! { <div>{err.to_string()}</div> },
         },
