@@ -4,11 +4,14 @@ use std::rc::Rc;
 
 use gloo::console::log;
 use gloo::file::callbacks::FileReader;
+use img_parts::jpeg::Jpeg;
+use img_parts::png::Png;
+use img_parts::ImageEXIF;
 use yew::prelude::*;
 
-use exif;
+use image;
 
-use std::io::Cursor;
+use exif;
 
 use crate::app_ctx::{AppContext, FileDetails, FileError, Msg};
 
@@ -49,18 +52,36 @@ pub fn Upload() -> Html {
                         log!("file loaded");
                         match res {
                             Ok(data) => {
-                                let mut cursor = Cursor::new(data.clone());
-                                let exif_reader = exif::Reader::new();
+                                let format = image::guess_format(&data).ok();
+                                let exif_data = format
+                                    .map(|m| match m {
+                                        image::ImageFormat::Jpeg => {
+                                            let img = Jpeg::from_bytes(data.clone().into()).ok();
+                                            img.map(|e| e.exif())
+                                        }
+                                        image::ImageFormat::Png => {
+                                            let img = Png::from_bytes(data.clone().into()).ok();
+                                            img.map(|e| e.exif())
+                                        }
+                                        _ => None,
+                                    })
+                                    .flatten()
+                                    .flatten();
+
+                                // let mut cursor = Cursor::new(data.clone());
                                 let mut exif_map = HashMap::new();
-                                if let Ok(exif) = exif_reader.read_from_container(&mut cursor) {
-                                    for f in exif.fields() {
-                                        log!(
-                                            "f {:?} {:?}",
-                                            f.tag.to_string(),
-                                            f.display_value().to_string()
-                                        );
-                                        exif_map.insert(f.tag, f.display_value().to_string());
-                                    }
+                                if let Some(exif_data) = exif_data {
+                                    let exif_reader = exif::Reader::new();
+                                    if let Ok(exif) = exif_reader.read_raw(exif_data.to_vec()) {
+                                        for f in exif.fields() {
+                                            log!(
+                                                "f {:?} {:?}",
+                                                f.tag.to_string(),
+                                                f.display_value().to_string()
+                                            );
+                                            exif_map.insert(f.tag, f.display_value().to_string());
+                                        }
+                                    };
                                 };
 
                                 return ctx.dispatch(Msg::Loaded(Ok(FileDetails {
@@ -72,7 +93,7 @@ pub fn Upload() -> Html {
                             }
                             Err(e) => ctx
                                 .dispatch(Msg::Loaded(Err(FileError::InvalidData(e.to_string())))),
-                        };
+                        }
                     });
 
                     // store task so it doesn't get dropped
