@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use exif::Tag;
-use image::ImageFormat;
 use yew::UseReducerHandle;
 
 use thiserror::Error;
@@ -14,9 +13,6 @@ pub type AppContext = UseReducerHandle<AppState>;
 
 #[derive(Error, Debug, PartialEq, Eq, Clone)]
 pub enum FileError {
-    #[error("Unknown file format")]
-    UnknownFormat,
-
     #[error("Invalid exif data: {0}")]
     InvalidExif(String),
 

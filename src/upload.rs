@@ -119,13 +119,25 @@ pub fn Upload() -> Html {
         })
     };
 
-    let onclick = {
+    let on_remove = {
+        let ctx = ctx.clone();
         Callback::from(move |event: MouseEvent| {
             event.prevent_default();
 
-            let _ctx = ctx.clone();
+            let ctx = ctx.clone();
 
             ctx.dispatch(Msg::RemoveExif);
+        })
+    };
+
+    let on_clear = {
+        let ctx = ctx.clone();
+        Callback::from(move |event: MouseEvent| {
+            event.prevent_default();
+
+            let ctx = ctx.clone();
+
+            ctx.dispatch(Msg::Clear);
         })
     };
 
@@ -158,7 +170,8 @@ pub fn Upload() -> Html {
         <input id="img-upload" type="file" class="hidden" accept="image/*" {onchange} />
     </label>
     <div>{ondragstate.to_string()}</div>
-    <button {onclick}>{"Remove exif"}</button>
+    <button onclick={on_remove}>{"Remove exif"}</button>
+    <button onclick={on_clear}>{"Clear data"}</button>
 
     </div>
 

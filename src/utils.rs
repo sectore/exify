@@ -54,3 +54,17 @@ pub fn get_file_details(
         exif: exif_map,
     })
 }
+
+pub fn remove_exif(details: FileDetails) -> Result<FileDetails, FileError> {
+    let FileDetails { data, .. } = details;
+    let mut image = img_from_bytes(data.clone())?;
+    image.set_exif(None);
+    let data = image.encoder().bytes().into();
+
+    Ok(FileDetails {
+        name: details.name,
+        file_type: details.file_type,
+        data,
+        exif: HashMap::new(),
+    })
+}

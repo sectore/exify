@@ -2,7 +2,10 @@ use std::rc::Rc;
 
 use yew::prelude::*;
 
-use crate::types::{AppContext, FileDetails, FileError};
+use crate::{
+    types::{AppContext, FileDetails, FileError},
+    utils::remove_exif,
+};
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  Message (Action)
@@ -40,30 +43,13 @@ impl Reducible for AppState {
     fn reduce(self: Rc<Self>, action: Self::Action) -> Rc<Self> {
         let file = match action {
             Msg::Loaded(details) => Some(details),
-            Msg::RemoveExif => None,
-            // {
-            // let details = self.file.map(|a| {
-            //     a.map(|b| {
-            //         let exif = HashMap::new();
-            //         let o_data = match b.format {
-            //             image::ImageFormat::Jpeg => {
-            //                 let img = Jpeg::from_bytes(b.data.clone().into()).ok();
-            //                 img.map(|e| e.set_exif(None));
-            //                 img
-            //             }
-            //             _ => None,
-            //         };
-
-            //         let details = o_data.map(|data| FileDetails {
-            //             exif,
-            //             data: data.encoder().bytes().into(),
-            //             ..b
-            //         });
-            //         details
-            //     })
-            // });
-            // details
-            // }
+            Msg::RemoveExif => {
+                if let Some(Ok(details)) = &self.file {
+                    Some(remove_exif(details.clone()))
+                } else {
+                    None
+                }
+            }
             Msg::Clear => None,
         };
 
