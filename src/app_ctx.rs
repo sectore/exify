@@ -1,26 +1,11 @@
-use std::{collections::HashMap, rc::Rc};
+use std::rc::Rc;
 
-use exif::Tag;
 use yew::prelude::*;
 
-use thiserror::Error;
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct FileDetails {
-    pub name: String,
-    pub file_type: String,
-    pub data: Vec<u8>,
-    pub exif: HashMap<Tag, String>,
-}
-
-#[derive(Error, Debug, PartialEq, Eq, Clone)]
-pub enum FileError {
-    #[error("Invalid file format")]
-    InvalidFormat,
-
-    #[error("Can't get data from file: {0}")]
-    InvalidData(String),
-}
+use crate::{
+    types::{AppContext, FileDetails, FileError},
+    utils::remove_exif,
+};
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  Message (Action)
@@ -29,6 +14,7 @@ pub enum FileError {
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Msg {
     Loaded(Result<FileDetails, FileError>),
+    RemoveExif,
     Clear,
 }
 
@@ -57,14 +43,19 @@ impl Reducible for AppState {
     fn reduce(self: Rc<Self>, action: Self::Action) -> Rc<Self> {
         let file = match action {
             Msg::Loaded(details) => Some(details),
+            Msg::RemoveExif => {
+                if let Some(Ok(details)) = &self.file {
+                    Some(remove_exif(details.clone()))
+                } else {
+                    None
+                }
+            }
             Msg::Clear => None,
         };
 
         Self { file }.into()
     }
 }
-
-pub type AppContext = UseReducerHandle<AppState>;
 
 #[derive(Properties, Debug, PartialEq)]
 pub struct AppProviderProps {

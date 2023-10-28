@@ -2,7 +2,7 @@ use base64::engine::general_purpose::STANDARD;
 use base64::Engine;
 use yew::*;
 
-use crate::app_ctx::AppContext;
+use crate::types::AppContext;
 
 #[function_component]
 pub fn Debug() -> Html {
