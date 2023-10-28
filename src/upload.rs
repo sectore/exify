@@ -1,19 +1,13 @@
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::rc::Rc;
 
 use gloo::console::log;
 use gloo::file::callbacks::FileReader;
-use img_parts::jpeg::Jpeg;
-use img_parts::png::Png;
-use img_parts::ImageEXIF;
 use yew::prelude::*;
 
-use image;
-
-use exif;
-
-use crate::app_ctx::{AppContext, FileDetails, FileError, Msg};
+use crate::app_ctx::Msg;
+use crate::types::{AppContext, FileError};
+use crate::utils::get_file_details;
 
 use gloo::file::File;
 
@@ -38,7 +32,7 @@ pub fn Upload() -> Html {
             log!("files_selected: {:?}", files.length());
             match files.item(0) {
                 None => {
-                    ctx.dispatch(Msg::Loaded(Err(FileError::InvalidData(
+                    return ctx.dispatch(Msg::Loaded(Err(FileError::InvalidData(
                         "No file in FileList".to_string(),
                     ))));
                 }
@@ -50,50 +44,16 @@ pub fn Upload() -> Html {
                     let ctx = ctx.clone();
                     let task = gloo::file::callbacks::read_as_bytes(&file, move |res| {
                         log!("file loaded");
-                        match res {
+
+                        let msg = match res {
                             Ok(data) => {
-                                let format = image::guess_format(&data).ok();
-                                let exif_data = format
-                                    .map(|m| match m {
-                                        image::ImageFormat::Jpeg => {
-                                            let img = Jpeg::from_bytes(data.clone().into()).ok();
-                                            img.map(|e| e.exif())
-                                        }
-                                        image::ImageFormat::Png => {
-                                            let img = Png::from_bytes(data.clone().into()).ok();
-                                            img.map(|e| e.exif())
-                                        }
-                                        _ => None,
-                                    })
-                                    .flatten()
-                                    .flatten();
-
-                                // let mut cursor = Cursor::new(data.clone());
-                                let mut exif_map = HashMap::new();
-                                if let Some(exif_data) = exif_data {
-                                    let exif_reader = exif::Reader::new();
-                                    if let Ok(exif) = exif_reader.read_raw(exif_data.to_vec()) {
-                                        for f in exif.fields() {
-                                            log!(
-                                                "f {:?} {:?}",
-                                                f.tag.to_string(),
-                                                f.display_value().to_string()
-                                            );
-                                            exif_map.insert(f.tag, f.display_value().to_string());
-                                        }
-                                    };
-                                };
-
-                                return ctx.dispatch(Msg::Loaded(Ok(FileDetails {
-                                    name: file_name,
-                                    file_type,
-                                    data,
-                                    exif: exif_map,
-                                })));
+                                let file_details = get_file_details(data, file_name, file_type);
+                                file_details
                             }
-                            Err(e) => ctx
-                                .dispatch(Msg::Loaded(Err(FileError::InvalidData(e.to_string())))),
-                        }
+                            Err(e) => Err(FileError::InvalidData(e.to_string())),
+                        };
+
+                        ctx.dispatch(Msg::Loaded(msg));
                     });
 
                     // store task so it doesn't get dropped
@@ -159,36 +119,48 @@ pub fn Upload() -> Html {
         })
     };
 
+    let onclick = {
+        Callback::from(move |event: MouseEvent| {
+            event.prevent_default();
+
+            let _ctx = ctx.clone();
+
+            ctx.dispatch(Msg::RemoveExif);
+        })
+    };
+
     html! {
 
-      <div class="flex items-center justify-center w-5/6">
-      <label
-      for="img-upload"
-      class={classes!("flex", "flex-col",
+    <div class="flex items-center justify-center w-5/6">
+    <label
+    for="img-upload"
+    class={classes!("flex",
       "items-center", "justify-center",
       "w-full", "h-64",
       "border-2", "border-gray-300", "hover:border-sky-500", "border-dashed",
       "rounded-lg", "cursor-pointer", "bg-gray-50", "hover:bg-gray-100",
       ondragstate.then(|| "bg-sky-100 border-sky-500")
     )}
-      {ondrop}
-      {ondragover}
-      {ondragleave}
-      {ondragenter}
-      >
-          <div
-          class="flex flex-col items-center justify-center pt-5 pb-6"
-          >
-              <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-              </svg>
-              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{"Click to upload"}</span>{" or drag and drop"}</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">{"Images only (PNG, JPG)"}</p>
-          </div>
-          <input id="img-upload" type="file" class="hidden" accept="image/*" {onchange} />
-      </label>
-      <div>{ondragstate.to_string()}</div>
-      </div>
+    {ondrop}
+    {ondragover}
+    {ondragleave}
+    {ondragenter}
+    >
+        <div
+        class="flex items-center justify-center pt-5 pb-6"
+        >
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{"Click to upload"}</span>{" or drag and drop"}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">{"Images only (PNG, JPG)"}</p>
+        </div>
+        <input id="img-upload" type="file" class="hidden" accept="image/*" {onchange} />
+    </label>
+    <div>{ondragstate.to_string()}</div>
+    <button {onclick}>{"Remove exif"}</button>
 
-          }
+    </div>
+
+        }
 }

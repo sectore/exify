@@ -2,7 +2,9 @@ use yew::*;
 
 mod app_ctx;
 mod debug;
+mod types;
 mod upload;
+mod utils;
 
 use app_ctx::AppProvider;
 use debug::Debug;
