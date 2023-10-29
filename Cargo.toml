@@ -16,7 +16,10 @@ yew = { version = "0.21", features = ["csr"] }
 [dependencies.web-sys]
 version = "^0.3.64"
 features = [
+  "Blob",
+  "BlobPropertyBag",
   "File",
   "DragEvent",
-  "DataTransfer"
+  "DataTransfer",
+  "Url"
 ]
