@@ -41,11 +41,11 @@ pub fn get_file_details(
 ) -> Result<FileDetails, FileError> {
     let image = img_from_bytes(data.clone())?;
 
-    let exif_data = image
-        .exif()
-        .ok_or(FileError::InvalidData("No exif data".to_string()))?;
-
-    let exif_map = exif_to_map(exif_data)?;
+    let exif_map = match image.exif() {
+        Some(exif) => exif_to_map(exif)?,
+        // No exif data means empty map
+        None => HashMap::new(),
+    };
 
     Ok(FileDetails {
         name: file_name,
