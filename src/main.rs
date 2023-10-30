@@ -2,6 +2,7 @@ use yew::*;
 
 mod app_ctx;
 mod debug;
+mod download;
 mod types;
 mod upload;
 mod utils;
