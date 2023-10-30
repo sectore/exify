@@ -1,11 +1,12 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use gloo::console::{error, log};
+use gloo::console::log;
 use gloo::file::callbacks::FileReader;
 use yew::prelude::*;
 
 use crate::app_ctx::Msg;
+use crate::download::Download;
 use crate::types::{AppContext, FileError};
 use crate::utils::get_file_details;
 
@@ -171,33 +172,15 @@ pub fn Upload() -> Html {
     <div>{ondragstate.to_string()}</div>
     <button onclick={on_remove}>{"Remove exif"}</button>
     <button onclick={on_clear}>{"Clear data"}</button>
-    <div>
     {
-      if let Some(Ok(file_details)) = &ctx.file {
-        let u8_array = js_sys::Array::of1(&js_sys::Uint8Array::from(&file_details.data[..]));
-
-        if let Ok(data_url) = web_sys::Blob::new_with_u8_array_sequence_and_options(
-            &u8_array,
-            web_sys::BlobPropertyBag::new().type_(&file_details.file_type),
-          ).and_then(|blob| web_sys::Url::create_object_url_with_blob(&blob)) {
-
-            html!{
-              <a download={format!("exified-{}", file_details.name.clone())} target="_blank" href={data_url.clone()}
-                onclick={Callback::from(move |_: MouseEvent| {
-                  if let Err(e) = web_sys::Url::revoke_object_url(&data_url) {
-                    error!(format!("failed to revoke object url: {:?}", e));
-                } else {
-                    log!("revoked object url");
-                }})}>{"Download"}</a>
-              }
-          } else {
-            html!{}
-          }
-      }
-      else {
-        html! {}
+      if let Some(Ok(_)) = &ctx.file {
+        html!(<Download />)
+      }else {
+        html!{}
       }
     }
+    <div>
+
     </div>
 
     </div>

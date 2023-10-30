@@ -203,6 +203,7 @@ dependencies = [
  "js-sys",
  "kamadak-exif",
  "thiserror",
+ "wasm-bindgen",
  "web-sys",
  "yew",
 ]
