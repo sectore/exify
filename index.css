@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #eee;
+
+
+.ease {
+  @apply transition duration-200 ease-in-out;
+}
+
+button {
+  @apply hover:from-30%
+  hover:shadow-xl
+  hover:translate-y-[-1px]
+  active:translate-y-0
+  active:shadow-none 
+  text-white 
+  bg-gradient-to-r from-blue-300 to-blue-400 to-90%
+  bg-[length:200%]
+  hover:animate-button
+  ease
 }

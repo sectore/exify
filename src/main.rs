@@ -2,28 +2,25 @@ use yew::*;
 
 mod app_ctx;
 mod debug;
+mod details;
 mod download;
+mod icons;
+mod layout;
+mod skeleton;
 mod types;
 mod upload;
 mod utils;
 
 use app_ctx::AppProvider;
-use debug::Debug;
-use upload::Upload;
+// use layout::Layout;
+use skeleton::Skeleton;
 
 #[function_component]
 fn App() -> Html {
     html! {
       <AppProvider>
-        <div class="w-full h-screen">
-        <header class="text-center bg py-2">
-        <h1 class="px-6 py-1 bg-white rounded-full text-base font-bold text-sky-500 inline">{"exify!"}</h1>
-        </header>
-        <div class="flex flex-col items-center justify-center h-full">
-          <Upload />
-          <Debug />
-        </div>
-        </div>
+        <Skeleton />
+        // <Layout />
       </AppProvider>
     }
 }

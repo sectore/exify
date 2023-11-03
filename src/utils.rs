@@ -1,5 +1,8 @@
 use std::collections::HashMap;
 
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine;
+
 use gloo::console::log;
 
 use img_parts::{Bytes, DynImage, ImageEXIF};
@@ -67,4 +70,12 @@ pub fn remove_exif(details: FileDetails) -> Result<FileDetails, FileError> {
         data,
         exif: HashMap::new(),
     })
+}
+
+pub fn img_src(file: &FileDetails) -> String {
+    format!(
+        "data:{};base64,{}",
+        file.file_type,
+        STANDARD.encode(&file.data)
+    )
 }
