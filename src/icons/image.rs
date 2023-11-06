@@ -8,8 +8,8 @@ pub struct Props {
     pub class: Classes,
 }
 
-#[function_component(IconImage)]
-pub fn icon_image(props: &Props) -> Html {
+#[function_component]
+pub fn Image(props: &Props) -> Html {
     let Props { class } = props;
 
     html! {

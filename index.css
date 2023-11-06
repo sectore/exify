@@ -8,15 +8,50 @@
   @apply transition duration-200 ease-in-out;
 }
 
-button {
-  @apply hover:from-30%
-  hover:shadow-xl
-  hover:translate-y-[-1px]
-  active:translate-y-0
-  active:shadow-none 
-  text-white 
-  bg-gradient-to-r from-blue-300 to-blue-400 to-90%
-  bg-[length:200%]
-  hover:animate-button
-  ease
+
+@layer components {
+
+  .btn {
+    @apply 
+    justify-center
+    flex items-center
+    shadow-lg
+    active:translate-y-0
+    active:shadow-none 
+    font-bold 
+    text-white 
+    text-shadow-dark
+    uppercase
+    text-xl sm:text-4xl
+    text-opacity-90
+    rounded-xl 
+    /* bg-gradient-to-r from-sky-400 to-sky-500 to-90% */
+    bg-sky-600
+    bg-[length:200%]
+    p-2 sm:p-4
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    ease
+  }
+
+  .btn:not([disabled]):hover {
+    @apply from-30% 
+      text-opacity-100
+      bg-sky-500
+      scale-105
+      shadow-xl
+      translate-y-[-1px]
+      animate-button
+  }
+
+  .btn-neutral {
+    @apply btn
+    bg-none
+    text-shadow-light
+    bg-gray-100 text-gray-400
+  }
+
+  .btn-neutral:not([disabled]):hover {
+    @apply bg-gray-400 text-white text-shadow-dark
+  }
 }

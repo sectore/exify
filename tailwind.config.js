@@ -23,10 +23,6 @@ module.exports = {
         gradient: 'gradient 12s ease-in-out infinite',
         button: 'button 2s ease-in-out',
       },
-      shadow: {
-        'text-light': '1px 1px 0px white',
-        'text-dark': '1px 1px 0px gray-800',
-      },
     }
   },
   variants: {

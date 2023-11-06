@@ -8,8 +8,8 @@ pub struct Props {
     pub class: Classes,
 }
 
-#[function_component(Spinner)]
-pub fn spinner(props: &Props) -> Html {
+#[function_component]
+pub fn Spinner(props: &Props) -> Html {
     let Props { class } = props;
 
     html! {

@@ -8,8 +8,8 @@ pub struct Props {
     pub class: Classes,
 }
 
-#[function_component(IconPlus)]
-pub fn icon_plus(props: &Props) -> Html {
+#[function_component]
+pub fn Plus(props: &Props) -> Html {
     let Props { class } = props;
 
     html! {
