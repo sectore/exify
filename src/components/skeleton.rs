@@ -32,6 +32,7 @@ pub fn skeleton() -> Html {
         (Tag::FNumber, "8.0"),
         (Tag::ExposureProgram, "Manual"),
         (Tag::ISOSpeed, "100"),
+        (Tag::MakerNote, "0x0101020202010201034f4e6f6b69612f5468655468696e675f30304545412f5454475f7370726f75743a31332f544b51312e3232303830372e3030312f303057575f335f3335413a757365722f72656c656173652d6b65797301020309312e3839393835363802020303312e3003020309312e3434363237333804020304353432370103031b5b323836343935362c20323836343935362c20323836343935365d0203030f5b312e302c20312e302c20312e305d030303215b323836343935362e302c20323836343935362e302c20323836343935362e305d040303093136352e313432373301040301310204030134030403285b28783a323133332c20793a313530352c20773a3336362c20683a3336362c2077743a313232295d040403033335360504030333353601050301300205030130030503013004050301300505030130"),
         (Tag::ExifVersion, "0231"),
         (Tag::DateTimeOriginal, "2023:04:12 15:05:24"),
         (Tag::DateTimeDigitized, "2023:04:12 15:05:24"),
@@ -93,7 +94,7 @@ pub fn skeleton() -> Html {
               text-xs md:text-base  text-gray-500 text-shadow-light
               odd:bg-gray-100">
                 <div class="w-1/2 md:w-1/3 px-3 py-1 border-r border-gray-200">{k.to_string()}</div>
-                <div class="w-1/2 md:w-2/3 px-3 py-1">{v.to_string()}</div>
+                <div class="w-1/2 md:w-2/3 px-3 py-1 truncate max-w-[200px]]">{v.to_string()}</div>
               </div>
             })}
           </div>
@@ -126,13 +127,12 @@ pub fn skeleton() -> Html {
               <Logo class="!w-auto !h-6 sm:!h-8 text-sky-600 hover:text-sky-500 ease" />
             </div>
           </div>
-            <div class="flex min-w-full md:min-w-[80%] max-h-[100%]
+            <div class="flex w-full md:w-[80%]
             flex-col items-center
             drop-shadow-md 
             bg-white bg-opacity-95 
             my-10 
             p-8 md:p-12 rounded-xl md:rounded-3xl 
-            overflow-hidden
             ease ">
               {match *view_state {
                 ViewState::Add => render_add,

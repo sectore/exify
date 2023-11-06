@@ -8,8 +8,8 @@ use gloo::utils::document;
 use crate::types::AppContext;
 
 
-#[function_component(Download)]
-pub fn download() -> Html {
+#[function_component]
+pub fn Download() -> Html {
 
     let error_msg: UseStateHandle<Option<String>> = use_state(|| None);
 
