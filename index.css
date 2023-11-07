@@ -22,7 +22,7 @@
     text-white 
     text-shadow-dark
     uppercase
-    text-xl sm:text-4xl
+    text-xl sm:text-3xl
     text-opacity-90
     rounded-xl 
     /* bg-gradient-to-r from-sky-400 to-sky-500 to-90% */
@@ -53,6 +53,6 @@
   }
 
   .btn-neutral:not([disabled]):hover {
-    @apply bg-gray-400 text-white text-shadow-dark
+    @apply bg-gray-500 text-white text-shadow-none
   }
 }

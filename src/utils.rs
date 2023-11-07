@@ -79,3 +79,7 @@ pub fn img_src(file: &FileDetails) -> String {
         STANDARD.encode(&file.data)
     )
 }
+
+pub fn exified_file_name(file: &FileDetails) -> String {
+    format!("exified-{}", &file.name)
+}

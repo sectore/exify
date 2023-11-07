@@ -3,36 +3,12 @@ use yew::*;
 use crate::components::add::Add;
 use crate::components::details::Details;
 use crate::icons::Logo;
-use crate::types::{AppContext, FileDetails};
+use crate::types::{AppContext, FileError};
 use crate::utils::img_src;
-
-#[derive(PartialEq, Clone)]
-enum ViewState {
-    Add,
-    Details(FileDetails),
-    Error(String),
-}
 
 #[function_component]
 pub fn Layout() -> Html {
     let ctx = use_context::<AppContext>().unwrap();
-
-    let view_state = use_state(|| ViewState::Add);
-
-    use_effect_with(ctx.file.clone(), {
-        let view_state = view_state.clone();
-        move |f| match f {
-            Some(Ok(file)) => {
-                view_state.set(ViewState::Details(file.clone()));
-            }
-            Some(Err(e)) => {
-                view_state.set(ViewState::Error(e.to_string()));
-            }
-            None => {
-                view_state.set(ViewState::Add);
-            }
-        }
-    });
 
     html! {
         <div class="group w-full h-screen bg-center
@@ -47,7 +23,7 @@ pub fn Layout() -> Html {
         relative
         ease
         "
-        style={if let ViewState::Details(f) = &*view_state {
+        style={if let Some(Ok(f)) = ctx.file.clone() {
           format!("background-image: url({}", img_src(&f))
         }  else {
           "".to_owned()
@@ -61,18 +37,25 @@ pub fn Layout() -> Html {
       </div>
         <div class="flex w-full md:w-[80%] h-full
         flex-col items-center
-        drop-shadow-md 
-        bg-white 
-        my-20 
-        p-8 md:p-12 rounded-xl md:rounded-3xl 
+        drop-shadow-md
+        bg-white
+        my-10
+        p-8 md:p-12 rounded-xl md:rounded-3xl
         overflow-hidden
-        ease ">
-          { match &*view_state {
-            ViewState::Add => html!(<Add />),
-            ViewState::Details(f) => html!(<Details file_details={f.clone()} />),
-            ViewState::Error(e) => html!(<p>{e}</p>),
+        ease "
+        >
+        { match ctx.file.clone() {
+            None => {
+              html!(<Add />)
+            }
+            Some(Err(FileError::DragDropFailed(_))) => {
+              html!(<Add />)
+            }
+            Some(_) => {
+              html!(<Details />)
             }
           }
+        }
 
         </div>
     </div>
