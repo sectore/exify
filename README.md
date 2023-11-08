@@ -1,6 +1,6 @@
 # exify
 
-Simple web application to remove [EXIF](https://en.wikipedia.org/wiki/Exif) data from images. 
+Simple web application to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images. 
 
 <p float="left">
   <a href="wiki/exify-1.png" target="_blank">
@@ -89,7 +89,7 @@ Original images will be unchanged. All changes will be saved as a new image pref
 
 ### How does exify work?
 
-Technically the application is built with [Yew](https://yew.rs/) ([Rust](https://www.rust-lang.org/)) and compiled to [WebAssembly](https://webassembly.org/). It uses [kamadak-exif](https://crates.io/crates/kamadak-exif) and [img-parts](https://crates.io/crates/img-parts) to parse and remove EXIF data from images.
+Technically the application is built with [Yew](https://yew.rs/) / ([Rust](https://www.rust-lang.org/)) and compiled to [WebAssembly](https://webassembly.org/). It uses [kamadak-exif](https://crates.io/crates/kamadak-exif) and [img-parts](https://crates.io/crates/img-parts) crates to parse and remove EXIF data from images.
 
 All code runs in the browser. No server is needed. 
 
@@ -99,7 +99,7 @@ All modern browsers.
 
 ### What image formats are supported?
 
-jpg, png and webp formats are supported.
+`jpg`, `png` and `webp` formats are supported.
 
 ### What metadata is removed?
 
