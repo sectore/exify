@@ -194,7 +194,6 @@ pub fn Add() -> Html {
               pl-4 sm:pl-10 pr-2 sm:pr-4 mb-3
               w-full sm:w-auto
               "
-
             >
             {"Select image"}
             <Plus class="w-8 h-8 sm:w-12 sm:h-12 ml-2 sn:ml-4" />

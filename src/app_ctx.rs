@@ -2,8 +2,6 @@ use std::rc::Rc;
 
 use yew::prelude::*;
 
-use wasm_bindgen::JsValue;
-
 use crate::{
     types::{AppContext, FileDetails, FileError, FileResult},
     utils::remove_exif,
@@ -70,14 +68,10 @@ impl Reducible for AppState {
 
                 state
             }
-            Msg::Saved(_) =>
-            // TODO handle result
-            {
-                AppState {
-                    file: None,
-                    exified: false,
-                }
-            }
+            Msg::Saved(_) => AppState {
+                file: None,
+                exified: false,
+            },
             Msg::Clear => AppState {
                 file: None,
                 exified: false,

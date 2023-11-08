@@ -10,15 +10,9 @@ use crate::app_ctx::Msg;
 
 use yew::html;
 
-#[derive(PartialEq, Properties)]
-pub struct Props {
-    #[prop_or_default]
-    pub class: Classes,
-}
 
 #[function_component]
-pub fn Details(_: &Props) -> Html {
-    // let Props { classes, .. } = props;
+pub fn Details() -> Html {
 
     let ctx = use_context::<AppContext>().unwrap();
 

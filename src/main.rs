@@ -8,7 +8,7 @@ mod utils;
 
 use app_ctx::AppProvider;
 use components::layout::Layout;
-use components::skeleton::Skeleton;
+// use components::skeleton::Skeleton;
 
 #[function_component]
 fn App() -> Html {
