@@ -18,6 +18,12 @@ pub enum FileError {
 
     #[error("Can't get data from file: {0}")]
     InvalidData(String),
+
+    #[error("Drag & drop image failed: {0}")]
+    DragDropFailed(String),
+
+    #[error("Couldn't save file: {0}")]
+    SaveFailed(String),
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -25,5 +31,7 @@ pub struct FileDetails {
     pub name: String,
     pub file_type: String,
     pub data: Vec<u8>,
-    pub exif: HashMap<Tag, String>,
+    pub exif: ExifMap,
 }
+
+pub type FileResult = Result<FileDetails, FileError>;

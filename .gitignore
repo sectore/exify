@@ -4,4 +4,8 @@ target/
 .direnv/
 dist/
 
+templates/
+
+assets/
+
 .DS_Store

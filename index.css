@@ -2,6 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #eee;
+
+
+.ease {
+  @apply transition duration-200 ease-in-out;
+}
+
+
+@layer components {
+
+  .btn {
+    @apply 
+    justify-center
+    flex items-center
+    shadow-lg
+    active:translate-y-0
+    active:shadow-none 
+    font-bold 
+    text-white 
+    text-shadow-dark
+    uppercase
+    text-2xl sm:text-3xl
+    text-opacity-90
+    rounded-full 
+    /* bg-gradient-to-r from-sky-400 to-sky-500 to-90% */
+    bg-sky-600
+    bg-[length:200%]
+    p-3 sm:p-4
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    cursor-pointer
+    ease
+  }
+
+  .btn:not([disabled]):hover {
+    @apply from-30% 
+      text-opacity-100
+      bg-sky-500
+      scale-105
+      shadow-xl
+      translate-y-[-1px]
+      animate-button
+  }
+
+  .btn-neutral {
+    @apply btn
+    bg-none
+    text-shadow-light
+    bg-gray-100 text-gray-400
+  }
+
+  .btn-neutral:not([disabled]):hover {
+    @apply bg-sky-600 text-white text-shadow-none
+  }
 }
