@@ -23,7 +23,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Build
-        run: nix develop -c trunk build
+        run: nix develop -c trunk build --release
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
