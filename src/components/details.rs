@@ -101,13 +101,23 @@ pub fn Details() -> Html {
       
       { if let Some(fd) = &*file_details {
         html!{
+          <div class="flex flex-col w-full items-center">
             <img
               class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
               src={img_src(&fd)} />
+            <p class="text-gray-400 text-sm md:text-base mt-2 truncate">
+              { if *is_exified {
+                  exified_file_name(&fd)
+                } else {
+                  fd.name.clone()
+                }
+              }
+            </p>
+          </div>
           }
         } else {
           html!{
-            <BrokenImage class="!w-40 !h-40 text-sky-600 " />
+            <BrokenImage class="!w-56 !h-56 text-gray-300 " />
           }
         }
       }
@@ -115,36 +125,41 @@ pub fn Details() -> Html {
       {
         if *is_exified {
           html!{
-            <button class="btn px-10 lg:px-28 my-8 lg:my-12
+            <button class="btn px-10 lg:px-28 mt-8 lg:mt-12
             w-full lg:w-auto" onclick={on_save}>{"Save"}</button>
           }
-        } else {
+        } else if file_details.is_some() && *has_exif {
           html!{
-            <button class="btn px-10 lg:px-28 my-8 lg:my-12
+            <button class="btn px-10 lg:px-28 mt-8 lg:mt-12
             w-full lg:w-auto"
-              disabled={!*has_exif}
               onclick={on_remove}>{"Remove EXIF"}</button>
           }
+        } else {
+          html!{}
         }
       }
 
           // error message
           { if let Some(err) = &*file_error {
               html!{
-                  <p class="w-full text-xl text-red-500 text-center my-5">{err.to_string()}</p>
+                <div class="w-full h-full flex flex-col items-center justify-center">
+                  <h2 class="text-2xl font-bold text-gray-400 py-2 uppercase">
+                    {"Error"}</h2>
+                  <p class="text-xl text-gray-400">{err.to_string()}</p>
+                </div>
               }
             } else {
               html!{}
             }
           }
 
-          <h2 class="text-xl md:text-2xl font-bold text-gray-400 mb-8 ">
+          <h2 class="text-xl md:text-2xl font-bold text-gray-400 my-8 ">
           {
             if *is_exified {
               "EXIF data removed".to_owned()
             } else if let Some(fd) = &*file_details {
               if fd.exif.is_empty() {
-                "No EXIF data found".to_owned()
+                "EXIF data not found".to_owned()
               } else {
                 format!("{:?} EXIF data found", &fd.exif.len())
               }

@@ -177,7 +177,7 @@ pub fn Add() -> Html {
             >{"Drop image here"}</p>
           {if let Some(Err(FileError::DragDropFailed(e))) = ctx.file.clone() {
             html!{<p class="my-1 text-lg text-red-500 font-normal">
-            {format!("Error: {:?}", e)}</p>}
+            {format!("ERROR {:?}", e)}</p>}
             } else {
               html!{}
             }

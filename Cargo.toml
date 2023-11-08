@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 base64 = "0.21.4"
 gloo = "0.10"
-img-parts= "0.3.0"
+img-parts = "0.3.0"
 js-sys = "0.3"
 kamadak-exif = "0.5.5"
 thiserror = "1.0"
