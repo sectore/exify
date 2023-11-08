@@ -159,7 +159,7 @@ pub fn Add() -> Html {
       {ondragenter}
     >
           <Image class={classes!(
-            "w-36", "h-36", "sm:w-56", "sm:h-56",
+            "w-56", "h-56",
             "mb-2", "sm:mb-4",
             "text-sky-600",
             "text-shadow-light",
@@ -168,7 +168,7 @@ pub fn Add() -> Html {
           )}
           />
           <p class={classes!(
-              "text-sky-600", "font-bold", "text-center", "text-2xl",
+              "text-sky-600", "font-bold", "text-center", "text-3xl",
               "sm:text-4xl", "uppercase",
               "text-shadow-light",
               "ease",

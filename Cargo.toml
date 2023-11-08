@@ -24,3 +24,17 @@ features = [
   "HtmlAnchorElement",
   "Url"
 ]
+
+# Yew -> Optimizations
+# https://yew.rs/docs/advanced-topics/optimizations#cargotoml
+[profile.release]
+# less code to include into binary
+panic = 'abort'
+# optimization over all codebase ( better optimization, slower build )
+codegen-units = 1
+# optimization for size ( more aggressive )
+opt-level = 'z'
+# optimization for size
+# opt-level = 's'
+# link time optimization using using whole-program analysis
+lto = true

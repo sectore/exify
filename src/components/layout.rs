@@ -42,6 +42,7 @@ pub fn Layout() -> Html {
         my-10
         p-8 md:p-12 rounded-xl md:rounded-3xl
         overflow-hidden
+        relative
         ease "
         >
         { match ctx.file.clone() {

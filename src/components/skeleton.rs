@@ -1,7 +1,7 @@
 use exif::Tag;
 use yew::*;
 
-use crate::icons::{Image, Logo, Plus};
+use crate::icons::{Back, Close, Image, Logo, Plus};
 use crate::types::{AppContext, ExifMap};
 
 #[derive(PartialEq)]
@@ -66,20 +66,16 @@ pub fn skeleton() -> Html {
     let render_exif = {
         html! {
         <>
+        <Back class="absolute left-10 top-8 md:top-10 w-12 h-12 md:w-14 md:h-14"/>
+        // <Close class="absolute right-8 md:right-10 top-8 md:top-10 w-12 h-12 md:w-14 md:h-14"/>
           <img
-            class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-500 "
+            class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
             src="/assets/demo.jpg" />
-            <div class="w-full flex flex-col lg:flex-row
-            justify-center items-center 
-            gap-6 lg:gap-12 xl:gap-20 
-            my-10 lg:my-12
-            ">
-              <button class="btn text-xl py-4 w-full ">{"Remove EXIF"}</button>
-              <button class="btn-neutral text-xl py-4 w-full">{"Cancel"}</button>
-            </div>
+              <button class="btn px-10 lg:px-28 my-8 lg:my-12
+              w-full lg:w-auto">{"Remove EXIF"}</button>
 
           // <h2 class="text-md md:text-lg text-red-500 mb-3 ">{"Error while parsing EXIF data"}</h2>
-          <h2 class="text-xl md:text-2xl font-bold text-gray-400 mb-6 ">{"20 EXIF data found"}</h2>
+          <h2 class="text-xl md:text-2xl font-bold text-gray-400 mb-8 ">{"20 EXIF data found"}</h2>
 
           <div class="w-full flex flex-row justify-center
             text-gray-500 bg-gray-200 
@@ -127,12 +123,14 @@ pub fn skeleton() -> Html {
               <Logo class="!w-auto !h-6 sm:!h-8 text-sky-600 hover:text-sky-500 ease" />
             </div>
           </div>
-            <div class="flex w-full md:w-[80%]
+            <div class="flex w-full md:w-[80%] h-full
             flex-col items-center
-            drop-shadow-md 
-            bg-white bg-opacity-95 
-            my-10 
-            p-8 md:p-12 rounded-xl md:rounded-3xl 
+            drop-shadow-md
+            bg-white
+            my-10
+            p-8 md:p-12 rounded-xl md:rounded-3xl
+            overflow-hidden
+            relative
             ease ">
               {match *view_state {
                 ViewState::Add => render_add,

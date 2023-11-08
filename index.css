@@ -22,13 +22,13 @@
     text-white 
     text-shadow-dark
     uppercase
-    text-xl sm:text-3xl
+    text-2xl sm:text-3xl
     text-opacity-90
-    rounded-xl 
+    rounded-full 
     /* bg-gradient-to-r from-sky-400 to-sky-500 to-90% */
     bg-sky-600
     bg-[length:200%]
-    p-2 sm:p-4
+    p-3 sm:p-4
     disabled:opacity-50
     disabled:cursor-not-allowed
     cursor-pointer
@@ -53,6 +53,6 @@
   }
 
   .btn-neutral:not([disabled]):hover {
-    @apply bg-gray-500 text-white text-shadow-none
+    @apply bg-sky-600 text-white text-shadow-none
   }
 }
