@@ -6,6 +6,6 @@ dist/
 
 templates/
 
-assets/
+draft/
 
 .DS_Store
