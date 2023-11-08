@@ -1,7 +1,5 @@
 # exify
 
-Simple web application to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images. 
-
 <p float="left">
   <a href="wiki/exify-1.png" target="_blank">
     <img src="wiki/exify-1.png" width="30%" />
@@ -14,6 +12,7 @@ Simple web application to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exc
   </a>
 </p>
 
+Web app to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images. 
 
 
 All processing is done in the browser. No server. No data is sent anywhere. It still works offline.
@@ -21,7 +20,7 @@ All processing is done in the browser. No server. No data is sent anywhere. It s
 
 ## Usage
 
-Open https://sectore.github.io/exify/ in your browser. 
+Open https://bitcoinbeachtravemuende.github.io/exify/ in your browser. 
 
 ## Development
 
@@ -87,7 +86,7 @@ No. The application works offline.
 
 Original images will be unchanged. All changes will be saved as a new image prefixed with `exify_`.
 
-### How does exify work?
+### How does `exify` work?
 
 Technically the application is built with [Yew](https://yew.rs/) / ([Rust](https://www.rust-lang.org/)) and compiled to [WebAssembly](https://webassembly.org/). It uses [kamadak-exif](https://crates.io/crates/kamadak-exif) and [img-parts](https://crates.io/crates/img-parts) crates to parse and remove EXIF data from images.
 
