@@ -1,3 +1,10 @@
+/**
+ *
+ * Mock component to render parts of the layout only
+ * Just for styling parts as quickly as possible
+ * without the need of logic and real data.
+ *
+*/
 use exif::Tag;
 use yew::*;
 
@@ -67,7 +74,6 @@ pub fn skeleton() -> Html {
         html! {
         <>
         <Back class="absolute left-10 top-8 md:top-10 w-12 h-12 md:w-14 md:h-14"/>
-        // <Close class="absolute right-8 md:right-10 top-8 md:top-10 w-12 h-12 md:w-14 md:h-14"/>
           <img
             class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
             src="/assets/demo.jpg" />

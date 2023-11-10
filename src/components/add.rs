@@ -1,7 +1,6 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use gloo::console::log;
 use gloo::file::callbacks::FileReader;
 use yew::prelude::*;
 
@@ -28,9 +27,7 @@ pub fn Add() -> Html {
     let files_selected = {
         let ctx = ctx.clone();
         let task_ref = task_ref.clone();
-        log!("files_selected called");
         Callback::from(move |files: FileList| {
-            log!("files_selected: {:?}", files.length());
             match files.item(0) {
                 None => {
                     return ctx.dispatch(Msg::Update(Err(FileError::DragDropFailed(
@@ -41,11 +38,8 @@ pub fn Add() -> Html {
                     let file = File::from(web_sys::File::from(file));
                     let file_name = file.name();
                     let file_type = file.raw_mime_type();
-                    log!("file type: {:?}", &file_type);
                     let ctx = ctx.clone();
                     let task = gloo::file::callbacks::read_as_bytes(&file, move |res| {
-                        log!("file loaded");
-
                         let msg = match res {
                             Ok(data) => {
                                 let file_details = get_file_details(data, file_name, file_type);
@@ -66,11 +60,9 @@ pub fn Add() -> Html {
 
     let onchange = {
         let files_selected = files_selected.clone();
-        log!("onchange called");
         Callback::from(move |e: Event| {
             let input: HtmlInputElement = e.target_unchecked_into();
             input.files().and_then(|list| {
-                log!("onchange files selected: {:?}", list.length());
                 files_selected.emit(list);
                 return Some(true);
             });
@@ -79,9 +71,7 @@ pub fn Add() -> Html {
 
     let ondrop = {
         let s = ondragstate.clone();
-        log!("ondrop 0 called");
         Callback::from(move |event: DragEvent| {
-            log!("ondrop 1 called {:?}", event.data_transfer());
             // Prevent default behavior (Prevent file from being opened)
             event.prevent_default();
             event.stop_propagation();
@@ -91,11 +81,9 @@ pub fn Add() -> Html {
             event
                 .data_transfer()
                 .and_then(|data| {
-                    log!("ondrop 2 called files {:?}", data.files());
                     return data.files();
                 })
                 .and_then(|list| {
-                    log!("ondrop 3 called {:?}", list.clone());
                     files_selected.emit(list.clone());
                     return Some(true);
                 });
@@ -104,15 +92,13 @@ pub fn Add() -> Html {
 
     let ondragover = {
         let s = ondragstate.clone();
-        log!("ondragover called");
         Callback::from(move |event: DragEvent| {
             // Prevent default behavior (Prevent file from being opened)
             // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop#prevent_the_browsers_default_drag_behavior
             event.prevent_default();
             event.stop_propagation();
 
-            let _ = event.data_transfer().and_then(|data| {
-                log!("ondragover files {:?}", data.files());
+            let _ = event.data_transfer().and_then(|_| {
                 return Some(true);
             });
 
@@ -122,7 +108,6 @@ pub fn Add() -> Html {
 
     let ondragleave = {
         let s = ondragstate.clone();
-        log!("ondragleave called");
         Callback::from(move |event: DragEvent| {
             event.prevent_default();
             event.stop_propagation();
@@ -133,12 +118,10 @@ pub fn Add() -> Html {
     let ondragenter = {
         let s = ondragstate.clone();
 
-        log!("ondragenter called");
         Callback::from(move |event: DragEvent| {
             event.prevent_default();
 
-            let _ = event.data_transfer().and_then(|data| {
-                log!("ondragenter files {:?}", data.files());
+            let _ = event.data_transfer().and_then(|_| {
                 return Some(true);
             });
 

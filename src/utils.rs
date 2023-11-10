@@ -3,8 +3,6 @@ use std::collections::HashMap;
 use base64::engine::general_purpose::STANDARD;
 use base64::Engine;
 
-use gloo::console::log;
-
 use img_parts::{Bytes, DynImage, ImageEXIF};
 
 use crate::types::{ExifMap, FileDetails, FileError};
@@ -26,11 +24,6 @@ pub fn exif_to_map(bytes: Bytes) -> Result<ExifMap, FileError> {
         .map_err(|e| FileError::InvalidExif(e.to_string()))?;
 
     for f in exif.fields() {
-        log!(
-            "f {:?} {:?}",
-            f.tag.to_string(),
-            f.display_value().to_string()
-        );
         exif_map.insert(f.tag, f.display_value().to_string());
     }
 
