@@ -105,7 +105,7 @@ pub fn Details() -> Html {
             <img
               class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
               src={img_src(&fd)} />
-            <p class="text-gray-400 text-sm md:text-base mt-2 truncate">
+            <p class="text-gray-400 text-base md:text-lg mt-2 truncate">
               { if *is_exified {
                   exified_file_name(&fd)
                 } else {
@@ -153,7 +153,7 @@ pub fn Details() -> Html {
             }
           }
 
-          <h2 class="text-xl md:text-2xl font-bold text-gray-400 my-8 ">
+          <h2 class="text-2xl md:text-4xl font-bold text-gray-400 my-8 ">
           {
             if *is_exified {
               "EXIF data removed".to_owned()
@@ -175,16 +175,16 @@ pub fn Details() -> Html {
               html!(
                 <>
                   <div class="w-full flex flex-row justify-center
-                  text-gray-500 bg-gray-200 
-                  text-shadow-light
-                  text-xs md:text-base">
+                    text-gray-500 bg-gray-200 
+                      text-shadow-light
+                      text-base md:text-lg">
                       <div class="w-1/2 md:w-1/3 px-3 py-1 border-r border-white">{"Name"}</div>
                       <div class="w-1/2 md:w-2/3 px-3 py-1">{"Data"}</div>
                   </div>
                   <div class="w-full overflow-y-scroll">
                   { for fd.exif.iter().map(|(k, v)| html! {
                       <div class="w-full flex justify-center
-                      text-xs md:text-base  text-gray-500 text-shadow-light
+                      text-base md:text-lg  text-gray-500 text-shadow-light
                       odd:bg-gray-100">
                         <div class="w-1/2 md:w-1/3 px-3 py-1 border-r border-gray-200 truncate">{k.to_string()}</div>
                         <div class="w-1/2 md:w-2/3 px-3 py-1 truncate">{v.to_string()}</div>

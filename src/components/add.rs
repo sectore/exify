@@ -151,8 +151,8 @@ pub fn Add() -> Html {
           )}
           />
           <p class={classes!(
-              "text-sky-600", "font-bold", "text-center", "text-3xl",
-              "sm:text-4xl", "uppercase",
+              "text-sky-600", "font-bold", "text-center",
+              "text-4xl", "uppercase",
               "text-shadow-light",
               "ease",
               ondragstate.then(|| "text-sky-500 scale-105")
@@ -166,7 +166,7 @@ pub fn Add() -> Html {
             }
           }
           <p class="
-              text-gray-300 font-bold text-center text-xl sm:text-2xl uppercase 
+              text-gray-300 font-bold text-center text-2xl uppercase 
               text-shadow-light 
               mt-2 sm:mt-6 mb-4 sm:mb-8"
             >{"or"}</p>
@@ -174,14 +174,14 @@ pub fn Add() -> Html {
               for="img-upload"
               class="btn
               py-4
-              pl-4 sm:pl-10 pr-2 sm:pr-4 mb-3
-              w-full sm:w-auto
+              pl-12 pr-8 mb-3
+              w-auto
               "
             >
             {"Select image"}
-            <Plus class="w-8 h-8 sm:w-12 sm:h-12 ml-2 sn:ml-4" />
+            <Plus class="w-12 h-12 ml-4" />
           </label>
-          <p class="text-gray-300 text-sm sm:text-base text-shadow-light">{"Supports jpg, png, webp"}</p>
+          <p class="text-gray-400 text-base text-shadow-light">{"Supports jpg, png, webp"}</p>
           <input id="img-upload" type="file" class="hidden" accept="image/*" {onchange} />
     </div>
 
