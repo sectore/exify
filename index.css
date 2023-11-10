@@ -22,13 +22,13 @@
     text-white 
     text-shadow-dark
     uppercase
-    text-2xl sm:text-3xl
+    text-3xl
     text-opacity-90
     rounded-full 
     /* bg-gradient-to-r from-sky-400 to-sky-500 to-90% */
     bg-sky-600
     bg-[length:200%]
-    p-3 sm:p-4
+    p-4
     disabled:opacity-50
     disabled:cursor-not-allowed
     cursor-pointer
@@ -42,7 +42,6 @@
       scale-105
       shadow-xl
       translate-y-[-1px]
-      animate-button
   }
 
   .btn-neutral {

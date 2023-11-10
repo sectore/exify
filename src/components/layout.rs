@@ -18,7 +18,7 @@ pub fn Layout() -> Html {
         hover:from-sky-400 
         hover:to-sky-900
         flex flex-col items-center justify-center
-        p-5 md:p-20
+        p-12 md:p-20
         bg-cover
         relative
         ease
@@ -31,16 +31,16 @@ pub fn Layout() -> Html {
       }
       >
       <div class="absolute left-0 right-0 top-0 flex justify-center">
-        <div class="flex items-center justify-center py-2 px-6 sm:px-8 rounded-b-2xl bg-white bg-opacity-95 drop-shadow-md">
-          <Logo class="!w-auto !h-6 sm:!h-8 text-sky-600 hover:text-sky-500 ease" />
+        <div class="flex items-center justify-center py-2 px-6 md:px-8 rounded-b-2xl bg-white bg-opacity-95 drop-shadow-md">
+          <Logo class="!w-auto !h-6 md:!h-8 text-sky-600 hover:text-sky-500 ease" />
         </div>
       </div>
-        <div class="flex w-full md:w-[80%] h-full
+        <div class="flex w-full lg:w-[80%] h-full
         flex-col items-center
         drop-shadow-md
         bg-white
-        my-10
-        p-8 md:p-12 rounded-xl md:rounded-3xl
+        rounded-xl md:rounded-3xl
+        p-10 md:p-20 
         overflow-hidden
         relative
         ease "
