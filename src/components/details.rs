@@ -95,7 +95,7 @@ pub fn Details() -> Html {
 
     html! {
       <>
-      <div class="absolute right-8 md:right-10 top-8 md:top-10 w-12 h-12 md:w-14 md:h-14" onclick={on_cancel}>
+      <div class="absolute right-4 md:right-10 top-4 md:top-10 w-10 h-10 md:w-14 md:h-14" onclick={on_cancel}>
         <Close class="w-full h-full" />
       </div>  
       
@@ -105,7 +105,7 @@ pub fn Details() -> Html {
             <img
               class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
               src={img_src(&fd)} />
-            <p class="text-gray-400 text-base md:text-lg mt-2 truncate">
+            <p class="text-gray-400 text-sm md:text-lg mt-2 truncate text-center">
               { if *is_exified {
                   exified_file_name(&fd)
                 } else {
@@ -126,13 +126,16 @@ pub fn Details() -> Html {
         if *is_exified {
           html!{
             <button class="btn px-10 lg:px-28 mt-8 lg:mt-12
-            w-full lg:w-auto" onclick={on_save}>{"Save"}</button>
+            w-auto text-xl" onclick={on_save}>{"Save"}</button>
           }
         } else if file_details.is_some() && *has_exif {
           html!{
             <button class="btn px-10 lg:px-28 mt-8 lg:mt-12
-            w-full lg:w-auto"
-              onclick={on_remove}>{"Remove EXIF"}</button>
+            w-auto"
+              onclick={on_remove}>
+              <span class="md:hidden">{"Remove"}</span>
+              <span class="hidden md:block">{"Remove EXIF"}</span>
+            </button>
           }
         } else {
           html!{}
@@ -153,7 +156,7 @@ pub fn Details() -> Html {
             }
           }
 
-          <h2 class="text-2xl md:text-4xl font-bold text-gray-400 my-8 ">
+          <h2 class="text-xl md:text-3xl font-bold text-gray-400 my-8 text-center">
           {
             if *is_exified {
               "EXIF data removed".to_owned()
@@ -177,14 +180,14 @@ pub fn Details() -> Html {
                   <div class="w-full flex flex-row justify-center
                     text-gray-500 bg-gray-200 
                       text-shadow-light
-                      text-base md:text-lg">
+                      text-sm md:text-lg">
                       <div class="w-1/2 md:w-1/3 px-3 py-1 border-r border-white">{"Name"}</div>
                       <div class="w-1/2 md:w-2/3 px-3 py-1">{"Data"}</div>
                   </div>
                   <div class="w-full overflow-y-scroll">
                   { for fd.exif.iter().map(|(k, v)| html! {
                       <div class="w-full flex justify-center
-                      text-base md:text-lg  text-gray-500 text-shadow-light
+                      text-sm md:text-lg text-gray-500 text-shadow-light
                       odd:bg-gray-100">
                         <div class="w-1/2 md:w-1/3 px-3 py-1 border-r border-gray-200 truncate">{k.to_string()}</div>
                         <div class="w-1/2 md:w-2/3 px-3 py-1 truncate">{v.to_string()}</div>
