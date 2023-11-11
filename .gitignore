@@ -4,8 +4,6 @@ target/
 .direnv/
 dist/
 
-templates/
-
 draft/
 
 .DS_Store
