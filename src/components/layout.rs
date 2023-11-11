@@ -18,7 +18,7 @@ pub fn Layout() -> Html {
         hover:from-sky-400 
         hover:to-sky-900
         flex flex-col items-center justify-center
-        p-12 md:p-20
+        px-8 py-14 md:p-20
         bg-cover
         relative
         ease
@@ -40,7 +40,7 @@ pub fn Layout() -> Html {
         drop-shadow-md
         bg-white
         rounded-xl md:rounded-3xl
-        p-10 md:p-20 
+        p-6 md:p-20 
         overflow-hidden
         relative
         ease "
@@ -57,7 +57,6 @@ pub fn Layout() -> Html {
             }
           }
         }
-
         </div>
     </div>
     }

@@ -152,12 +152,15 @@ pub fn Add() -> Html {
           />
           <p class={classes!(
               "text-sky-600", "font-bold", "text-center",
-              "text-4xl", "uppercase",
+              "text-3xl", "md:text-4xl", "uppercase",
               "text-shadow-light",
               "ease",
               ondragstate.then(|| "text-sky-500 scale-105")
             )}
-            >{"Drop image here"}</p>
+            >
+            <span class="hidden md:block">{"Drop your image here"}</span>
+            <span class="md:hidden">{"Drop image"}</span>
+            </p>
           {if let Some(Err(FileError::DragDropFailed(e))) = ctx.file.clone() {
             html!{<p class="my-1 text-lg text-red-500 font-normal">
             {format!("ERROR {:?}", e)}</p>}
@@ -173,13 +176,13 @@ pub fn Add() -> Html {
             <label
               for="img-upload"
               class="btn
-              py-4
-              pl-12 pr-8 mb-3
+              pl-10 pr-6 mb-3
               w-auto
               "
             >
-            {"Select image"}
-            <Plus class="w-12 h-12 ml-4" />
+            <span class="md:hidden">{"Select"}</span>
+            <span class="hidden md:block">{"Select image"}</span>
+            <Plus class="w-8 h-8 md:w-12 md:h-12 ml-2 md:ml-4" />
           </label>
           <p class="text-gray-400 text-base text-shadow-light">{"Supports jpg, png, webp"}</p>
           <input id="img-upload" type="file" class="hidden" accept="image/*" {onchange} />
