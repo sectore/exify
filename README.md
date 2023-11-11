@@ -1,15 +1,15 @@
-# exify
+# `exify`
 
 Progressive Web App (PWA) to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images.
 
 <p float="left">
-  <a href="assets/exify-1.png" target="_blank">
+  <a href="assets/exify-1.png">
     <img src="assets/exify-1.png" width="30%" />
   </a>
-  <a href="assets/exify-2.png" target="_blank">
+  <a href="assets/exify-2.png">
     <img src="assets/exify-2.png" width="30%" />
   </a>
-  <a href="assets/exify-3.png" target="_blank">
+  <a href="assets/exify-3.png">
     <img src="assets/exify-3.png" width="30%" />
   </a>
 </p>
@@ -25,9 +25,28 @@ Progressive Web App (PWA) to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (
 - Free open source software (MIT License)
 
 
-## Usage
+## Mobile app
+
+- Open https://bitcoinbeachtravemuende.github.io/exify/ in your browser. 
+- Install the application from the browser menu by clicking "Install app".
+- After installing `exify`, you can start it just as you would with any other app.
+
+<p float="left">
+  <a href="templates/exify-install-1.jpg">
+    <img src="templates/exify-install-1.jpg" width="30%" />
+  </a>
+  <a href="templates/exify-install-2.jpg">
+    <img src="templates/exify-install-2.jpg" width="30%" />
+  </a>
+  <a href="templates/exify-install-3.jpg">
+    <img src="templates/exify-install-3.jpg" width="30%" />
+  </a>
+</p>
+
+## Desktop
 
 Open https://bitcoinbeachtravemuende.github.io/exify/ in your browser. 
+
 
 ## Development
 
