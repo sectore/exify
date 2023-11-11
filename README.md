@@ -1,21 +1,28 @@
 # exify
 
+Progressive Web App (PWA) to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images.
+
 <p float="left">
-  <a href="wiki/exify-1.png" target="_blank">
-    <img src="wiki/exify-1.png" width="30%" />
+  <a href="assets/exify-1.png" target="_blank">
+    <img src="assets/exify-1.png" width="30%" />
   </a>
-  <a href="wiki/exify-2.png" target="_blank">
-    <img src="wiki/exify-2.png" width="30%" />
+  <a href="assets/exify-2.png" target="_blank">
+    <img src="assets/exify-2.png" width="30%" />
   </a>
-  <a href="wiki/exify-3.png" target="_blank">
-    <img src="wiki/exify-3.png" width="30%" />
+  <a href="assets/exify-3.png" target="_blank">
+    <img src="assets/exify-3.png" width="30%" />
   </a>
 </p>
 
-Web app to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (Exchangeable Image File Format) data from images. 
+ 
+## Features
 
-
-All processing is done in the browser. No server. No data is sent anywhere. It still works offline.
+- Client-side image processing
+- No server
+- No data is sent anywhere
+- Mobile support
+- Once loaded it works offline to process data
+- Free open source software (MIT License)
 
 
 ## Usage
@@ -84,7 +91,7 @@ No. The application works offline.
 
 ### What happens to my original images?
 
-Original images will be unchanged. All changes will be saved as a new image prefixed with `exify_`.
+Original images will be unchanged. All changes will be saved as a new image prefixed with `exify-`.
 
 ### How does `exify` work?
 
@@ -95,6 +102,10 @@ All code runs in the browser. No server is needed.
 ### What browsers are supported?
 
 All modern browsers.
+
+### Does it work for mobile devices?
+
+Yes. The application works on mobile devices. Once installed from browser, it can be started from the home screen of your device.
 
 ### What image formats are supported?
 

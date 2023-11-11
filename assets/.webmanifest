@@ -1,0 +1,50 @@
+{
+  "name": "exify",
+  "description": "App to remove EXIF data from images. No server. Once loaded it works offline to process data.",
+  "categories": ["exif", "images", "processing", "offline", "privacy"],
+  "start_url": "../",
+  "scope": "../",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./favicon-48x48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "./favicon-96x96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "./favicon-128x128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "./favicon-256x256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./favicon-512x512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./exify-1.png",
+      "sizes": "933x998",
+      "label": "Start screen to add images to the app"
+    },
+    {
+      "src": "./exify-2.png",
+      "sizes": "933x998",
+      "label": "Detects EXIF data in images"
+    },
+    {
+      "src": "./exify-2.png",
+      "sizes": "933x998",
+      "label": "Removes EXIF data from images"
+    }
+  ]
+}

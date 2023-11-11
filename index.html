@@ -1,13 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Exify</title>
+    <title>exify</title>
+    <meta name="description" content="Progressive Web App (PWA) to remove EXIF data from images. No server. Once loaded it works offline to process images." />
+    <meta name="keywords" content="exif, images, processing, offline, privacy" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/exify/assets/.webmanifest">
+
     <link type="image/x-icon" rel="icon" href="/exify/assets/favicon.ico" />
     <link type="image/x-icon" rel="shortcut icon" href="/exify/assets/favicon.ico" />
     <link rel="icon" type="image/png" href="/exify/assets/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/exify/assets/favicon-16x16.png" sizes="16x16" />    
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-16x16.png" sizes="16x16" />  
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/exify/assets/favicon-128x128.png" sizes="128x128" />
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/exify/assets/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/exify/assets/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/exify/assets/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/exify/assets/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/exify/assets/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/exify/assets/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/exify/assets/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/exify/assets/apple-touch-icon-152x152.png" />
+
+    <meta name="application-name" content="exify"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="/exify/assets/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="/exify/assets/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="/exify/assets/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="/exify/assets/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="/exify/assets/mstile-310x310.png" />
+
     <link data-trunk rel="tailwind-css" href="./index.css"/>
     <link data-trunk rel="copy-dir"" href="./assets" />
   </head>
