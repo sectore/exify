@@ -12,17 +12,13 @@
 
     crane = {
       url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -44,7 +40,7 @@
             "rust-src" # rust-analyzer -> error "cannot find proc-macro-srv..." -> see https://github.com/zhangwt-cn/notes/issues/8
           ]; 
         };
-        craneLib = ((crane.mkLib pkgs).overrideToolchain rustToolchain).overrideScope' (final: prev: {
+        craneLib = ((crane.mkLib pkgs).overrideToolchain rustToolchain).overrideScope (_final: _prev: {
           # The version of wasm-bindgen-cli needs to match the version in Cargo.lock. You
           # can unpin this if your nixpkgs commit contains the appropriate wasm-bindgen-cli version
           inherit (import nixpkgs-for-wasm-bindgen { inherit system; }) wasm-bindgen-cli;

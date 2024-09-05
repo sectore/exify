@@ -44,10 +44,12 @@ pub fn Details() -> Html {
                 // transform Vec<u8> into JSValue (Array)
                 let u8_array =
                     js_sys::Array::of1(&js_sys::Uint8Array::from(&fd.data[..]));
+                    let options = web_sys::BlobPropertyBag::new();
+                    options.set_type(&fd.file_type);
                 // get URL (blob) to download file
                 let result = web_sys::Blob::new_with_u8_array_sequence_and_options(
                     &u8_array,
-                    web_sys::BlobPropertyBag::new().type_(&fd.file_type),
+                    &options,
                 )
                 .and_then(|blob| web_sys::Url::create_object_url_with_blob(&blob))
                 .and_then(|url| 
