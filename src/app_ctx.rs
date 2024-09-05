@@ -24,19 +24,12 @@ pub enum Msg {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Default)]
 pub struct AppState {
     pub file: Option<FileResult>,
     pub exified: bool,
 }
 
-impl Default for AppState {
-    fn default() -> Self {
-        Self {
-            file: None,
-            exified: false,
-        }
-    }
-}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  Reducer
@@ -52,7 +45,9 @@ impl Reducible for AppState {
                 exified: self.exified,
             },
             Msg::RemoveExif => {
-                let state = if let Some(Ok(details)) = &self.file {
+                
+
+                if let Some(Ok(details)) = &self.file {
                     let result = remove_exif(details.clone());
 
                     AppState {
@@ -64,9 +59,7 @@ impl Reducible for AppState {
                         file: None,
                         exified: false,
                     }
-                };
-
-                state
+                }
             }
             Msg::Saved(_) => AppState {
                 file: None,
@@ -90,7 +83,7 @@ pub struct AppProviderProps {
 
 #[function_component]
 pub fn AppProvider(props: &AppProviderProps) -> Html {
-    let msg = use_reducer(|| AppState::default());
+    let msg = use_reducer(AppState::default);
 
     html! {
         <ContextProvider<AppContext> context={msg}>

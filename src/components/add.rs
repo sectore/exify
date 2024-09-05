@@ -30,20 +30,20 @@ pub fn Add() -> Html {
         Callback::from(move |files: FileList| {
             match files.item(0) {
                 None => {
-                    return ctx.dispatch(Msg::Update(Err(FileError::DragDropFailed(
+                    ctx.dispatch(Msg::Update(Err(FileError::DragDropFailed(
                         "No file in FileList".to_string(),
-                    ))));
+                    ))))
                 }
                 Some(file) => {
-                    let file = File::from(web_sys::File::from(file));
+                    let file = File::from(file);
                     let file_name = file.name();
                     let file_type = file.raw_mime_type();
                     let ctx = ctx.clone();
                     let task = gloo::file::callbacks::read_as_bytes(&file, move |res| {
                         let msg = match res {
                             Ok(data) => {
-                                let file_details = get_file_details(data, file_name, file_type);
-                                file_details
+                                
+                                get_file_details(data, file_name, file_type)
                             }
                             Err(e) => Err(FileError::InvalidData(e.to_string())),
                         };
@@ -54,7 +54,7 @@ pub fn Add() -> Html {
                     // store task so it doesn't get dropped
                     *task_ref.borrow_mut() = Some(task);
                 }
-            };
+            }
         })
     };
 
@@ -62,9 +62,9 @@ pub fn Add() -> Html {
         let files_selected = files_selected.clone();
         Callback::from(move |e: Event| {
             let input: HtmlInputElement = e.target_unchecked_into();
-            input.files().and_then(|list| {
+            input.files().map(|list| {
                 files_selected.emit(list);
-                return Some(true);
+                Some(true)
             });
         })
     };
@@ -81,11 +81,11 @@ pub fn Add() -> Html {
             event
                 .data_transfer()
                 .and_then(|data| {
-                    return data.files();
+                    data.files()
                 })
-                .and_then(|list| {
+                .map(|list| {
                     files_selected.emit(list.clone());
-                    return Some(true);
+                    Some(true)
                 });
         })
     };
@@ -98,8 +98,8 @@ pub fn Add() -> Html {
             event.prevent_default();
             event.stop_propagation();
 
-            let _ = event.data_transfer().and_then(|_| {
-                return Some(true);
+            let _ = event.data_transfer().map(|_| {
+                Some(true)
             });
 
             s.set(true);
@@ -121,8 +121,8 @@ pub fn Add() -> Html {
         Callback::from(move |event: DragEvent| {
             event.prevent_default();
 
-            let _ = event.data_transfer().and_then(|_| {
-                return Some(true);
+            let _ = event.data_transfer().map(|_| {
+                Some(true)
             });
 
             s.set(false);

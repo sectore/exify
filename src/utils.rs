@@ -8,11 +8,11 @@ use img_parts::{Bytes, DynImage, ImageEXIF};
 use crate::types::{ExifMap, FileDetails, FileError};
 
 pub fn img_from_bytes(data: Vec<u8>) -> Result<DynImage, FileError> {
-    let image = DynImage::from_bytes(data.clone().into())
-        .map_err(|e| FileError::InvalidData(e.to_string()))?
-        .ok_or_else(|| FileError::InvalidData("No image data".to_string()));
+    
 
-    image
+    DynImage::from_bytes(data.clone().into())
+        .map_err(|e| FileError::InvalidData(e.to_string()))?
+        .ok_or_else(|| FileError::InvalidData("No image data".to_string()))
 }
 
 pub fn exif_to_map(bytes: Bytes) -> Result<ExifMap, FileError> {

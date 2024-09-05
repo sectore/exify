@@ -20,7 +20,7 @@ pub fn Details() -> Html {
 
     let file_error = use_memo(ctx.file.clone(), |file| file.clone().and_then(Result::err));
 
-    let is_exified = use_memo(ctx.exified, |ex| ex.clone());
+    let is_exified = use_memo(ctx.exified, |ex| *ex);
 
     let has_exif = use_memo(ctx.file.clone(), |file| 
       file.clone().and_then(Result::ok).map(|fd| !fd.exif.is_empty()).unwrap_or(false));
@@ -59,8 +59,8 @@ pub fn Details() -> Html {
                       // Map error needed to stay with Result<_, JSValue>
                       .ok_or(JsValue::from_str("no document"))
                       .and_then(|d| d.create_element("a"))
-                      .and_then(|elem| {
-                        let name = exified_file_name(&fd);
+                      .map(|elem| {
+                        let name = exified_file_name(fd);
                           let a: HtmlAnchorElement = HtmlAnchorElement::from(JsValue::from(elem));
                           a.set_href(&url);
                           a.set_download(&name);
@@ -70,7 +70,7 @@ pub fn Details() -> Html {
                           Url::revoke_object_url(&url).unwrap();
                           document().body().unwrap().remove_child(&a).unwrap();
                           // return name
-                          Ok(name)
+                          name
                         })
                         
                   );
@@ -106,10 +106,10 @@ pub fn Details() -> Html {
           <div class="flex flex-col w-full items-center">
             <img
               class="max-w-[10rem] max-h-[10rem] w-auto h-auto border-[1em] border-sky-600 "
-              src={img_src(&fd)} />
+              src={img_src(fd)} />
             <p class="text-gray-400 text-sm md:text-lg mt-2 truncate text-center">
               { if *is_exified {
-                  exified_file_name(&fd)
+                  exified_file_name(fd)
                 } else {
                   fd.name.clone()
                 }
