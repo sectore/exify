@@ -3,17 +3,15 @@ use wasm_bindgen::JsValue;
 use web_sys::{HtmlAnchorElement, Url};
 use yew::prelude::*;
 
+use crate::app_ctx::Msg;
 use crate::icons::{BrokenImage, Close};
 use crate::types::{AppContext, FileError};
-use crate::utils::{img_src, exified_file_name};
-use crate::app_ctx::Msg;
+use crate::utils::{exified_file_name, img_src};
 
 use yew::html;
 
-
 #[function_component]
 pub fn Details() -> Html {
-
     let ctx = use_context::<AppContext>().unwrap();
 
     let file_details = use_memo(ctx.file.clone(), |file| file.clone().and_then(Result::ok));
@@ -22,8 +20,12 @@ pub fn Details() -> Html {
 
     let is_exified = use_memo(ctx.exified, |ex| *ex);
 
-    let has_exif = use_memo(ctx.file.clone(), |file| 
-      file.clone().and_then(Result::ok).map(|fd| !fd.exif.is_empty()).unwrap_or(false));
+    let has_exif = use_memo(ctx.file.clone(), |file| {
+        file.clone()
+            .and_then(Result::ok)
+            .map(|fd| !fd.exif.is_empty())
+            .unwrap_or(false)
+    });
 
     let on_remove = {
         let ctx = ctx.clone();
@@ -37,50 +39,46 @@ pub fn Details() -> Html {
     };
 
     let on_save = {
-      let fd = file_details.clone();
-      let ctx = ctx.clone();
-      Callback::from(move |_: MouseEvent| {
+        let fd = file_details.clone();
+        let ctx = ctx.clone();
+        Callback::from(move |_: MouseEvent| {
             if let Some(fd) = &*fd {
                 // transform Vec<u8> into JSValue (Array)
-                let u8_array =
-                    js_sys::Array::of1(&js_sys::Uint8Array::from(&fd.data[..]));
-                    let options = web_sys::BlobPropertyBag::new();
-                    options.set_type(&fd.file_type);
+                let u8_array = js_sys::Array::of1(&js_sys::Uint8Array::from(&fd.data[..]));
+                let options = web_sys::BlobPropertyBag::new();
+                options.set_type(&fd.file_type);
                 // get URL (blob) to download file
-                let result = web_sys::Blob::new_with_u8_array_sequence_and_options(
-                    &u8_array,
-                    &options,
-                )
-                .and_then(|blob| web_sys::Url::create_object_url_with_blob(&blob))
-                .and_then(|url| 
-                    // Create <a> element to download file
-                    web_sys::window()
-                      .and_then(|w| w.document())
-                      // Map error needed to stay with Result<_, JSValue>
-                      .ok_or(JsValue::from_str("no document"))
-                      .and_then(|d| d.create_element("a"))
-                      .map(|elem| {
-                        let name = exified_file_name(fd);
-                          let a: HtmlAnchorElement = HtmlAnchorElement::from(JsValue::from(elem));
-                          a.set_href(&url);
-                          a.set_download(&name);
-                          a.set_class_name("hidden");
-                          a.click();
-                          // cleanup
-                          Url::revoke_object_url(&url).unwrap();
-                          document().body().unwrap().remove_child(&a).unwrap();
-                          // return name
-                          name
-                        })
-                        
-                  );
+                let result =
+                    web_sys::Blob::new_with_u8_array_sequence_and_options(&u8_array, &options)
+                        .and_then(|blob| web_sys::Url::create_object_url_with_blob(&blob))
+                        // Create <a> element to download file
+                        .and_then(|url| {
+                            web_sys::window()
+                                .and_then(|w| w.document())
+                                // Map error needed to stay with Result<_, JSValue>
+                                .ok_or(JsValue::from_str("no document"))
+                                .and_then(|d| d.create_element("a"))
+                                .map(|elem| {
+                                    let name = exified_file_name(fd);
+                                    let a: HtmlAnchorElement =
+                                        HtmlAnchorElement::from(JsValue::from(elem));
+                                    a.set_href(&url);
+                                    a.set_download(&name);
+                                    a.set_class_name("hidden");
+                                    a.click();
+                                    // cleanup
+                                    Url::revoke_object_url(&url).unwrap();
+                                    document().body().unwrap().remove_child(&a).unwrap();
+                                    // return name
+                                    name
+                                })
+                        });
 
-                  let result = result.map_err(|e| FileError::SaveFailed(
-                    e.as_string()
-                    .unwrap_or("failed to save file".to_owned())
-                  ));
-                  ctx.dispatch(Msg::Saved(result));
-          };
+                let result = result.map_err(|e| {
+                    FileError::SaveFailed(e.as_string().unwrap_or("failed to save file".to_owned()))
+                });
+                ctx.dispatch(Msg::Saved(result));
+            };
         })
     };
 
@@ -99,8 +97,8 @@ pub fn Details() -> Html {
       <>
       <div class="absolute right-4 md:right-10 top-4 md:top-10 w-10 h-10 md:w-14 md:h-14" onclick={on_cancel}>
         <Close class="w-full h-full" />
-      </div>  
-      
+      </div>
+
       { if let Some(fd) = &*file_details {
         html!{
           <div class="flex flex-col w-full items-center">

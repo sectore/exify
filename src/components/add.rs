@@ -29,11 +29,9 @@ pub fn Add() -> Html {
         let task_ref = task_ref.clone();
         Callback::from(move |files: FileList| {
             match files.item(0) {
-                None => {
-                    ctx.dispatch(Msg::Update(Err(FileError::DragDropFailed(
-                        "No file in FileList".to_string(),
-                    ))))
-                }
+                None => ctx.dispatch(Msg::Update(Err(FileError::DragDropFailed(
+                    "No file in FileList".to_string(),
+                )))),
                 Some(file) => {
                     let file = File::from(file);
                     let file_name = file.name();
@@ -41,10 +39,7 @@ pub fn Add() -> Html {
                     let ctx = ctx.clone();
                     let task = gloo::file::callbacks::read_as_bytes(&file, move |res| {
                         let msg = match res {
-                            Ok(data) => {
-                                
-                                get_file_details(data, file_name, file_type)
-                            }
+                            Ok(data) => get_file_details(data, file_name, file_type),
                             Err(e) => Err(FileError::InvalidData(e.to_string())),
                         };
 
@@ -80,9 +75,7 @@ pub fn Add() -> Html {
 
             event
                 .data_transfer()
-                .and_then(|data| {
-                    data.files()
-                })
+                .and_then(|data| data.files())
                 .map(|list| {
                     files_selected.emit(list.clone());
                     Some(true)
@@ -98,9 +91,7 @@ pub fn Add() -> Html {
             event.prevent_default();
             event.stop_propagation();
 
-            let _ = event.data_transfer().map(|_| {
-                Some(true)
-            });
+            let _ = event.data_transfer().map(|_| Some(true));
 
             s.set(true);
         })
@@ -121,9 +112,7 @@ pub fn Add() -> Html {
         Callback::from(move |event: DragEvent| {
             event.prevent_default();
 
-            let _ = event.data_transfer().map(|_| {
-                Some(true)
-            });
+            let _ = event.data_transfer().map(|_| Some(true));
 
             s.set(false);
         })

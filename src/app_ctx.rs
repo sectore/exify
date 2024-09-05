@@ -23,13 +23,11 @@ pub enum Msg {
 //  App state
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#[derive(Debug, PartialEq, Eq, Clone)]
-#[derive(Default)]
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct AppState {
     pub file: Option<FileResult>,
     pub exified: bool,
 }
-
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  Reducer
@@ -45,8 +43,6 @@ impl Reducible for AppState {
                 exified: self.exified,
             },
             Msg::RemoveExif => {
-                
-
                 if let Some(Ok(details)) = &self.file {
                     let result = remove_exif(details.clone());
 
