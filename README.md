@@ -27,7 +27,7 @@ Progressive Web App (PWA) to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (
 
 ## Mobile app
 
-- Open https://bitcoinbeachtravemuende.github.io/exify/ in your browser. 
+- Open https://sectore.github.io/exify/ in your browser. 
 - Install the application from the browser menu by clicking "Install app".
 - After installing `exify`, you can start it just as you would with any other app.
 
@@ -45,7 +45,7 @@ Progressive Web App (PWA) to remove [EXIF](https://en.wikipedia.org/wiki/Exif) (
 
 ## Desktop
 
-Open https://bitcoinbeachtravemuende.github.io/exify/ in your browser. 
+Open https://sectore.github.io/exify/ in your browser. 
 
 
 ## Development
